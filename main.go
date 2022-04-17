@@ -1,7 +1,7 @@
 package main
 
-import "starwars-api-go/conf/databases"
+import "starwars-api-go/conf/storage"
 
 func main() {
-	databases.StartMongoDB()
+	storage.StartMongoDB()
 }
