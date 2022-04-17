@@ -30,7 +30,7 @@ func StartMongoDB() (*mongo.Client, context.CancelFunc) {
 func buildMongoUri() string {
 	host := commons.GetEnvVar("MONGO_HOST", "localhost")
 	port := commons.GetEnvVar("MONGO_PORT", "27017")
-	username := commons.GetEnvVar("MONGO_USERNAME", "")
+	username := commons.GetEnvVar("MONGO_USER", "")
 	password := commons.GetEnvVar("MONGO_PASSWORD", "")
 	database := commons.GetEnvVar("MONGO_DB", "starwars")
 
