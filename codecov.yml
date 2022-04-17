@@ -8,15 +8,18 @@ comment:
 
 coverage:
   precision: 2
-  range: 10...20
-  round: up
+  range: 80...100
+  round: down
   status:
     changes: false
     default_rules:
       flag_coverage_not_uploaded_behavior: include
-    patch: true
-    project: true
-
+    patch:
+      default:
+        target: 80...100
+    project:
+      default:
+        target: 80%
 github_checks:
   annotations: true
 
