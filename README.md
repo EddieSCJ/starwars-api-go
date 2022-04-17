@@ -5,6 +5,8 @@
     <a href="https://app.snyk.io/org/eddiescj/projects" target"_blank">:wolf: Snyk </a>
     <a href="https://sonarcloud.io/project/overview?id=EddieSCJ_starwars-api-go" target"_blank">:detective: SonarCloud </a>
     <a href="https://app.codecov.io/gh/EddieSCJ/starwars-api-go/" target"_blank">:open_umbrella: CodeCov </a>
+    <a href="https://golangci-lint.run/" target="_blank">:white_check_mark: GolangCI-Lint </a>
+
 </div>
 
 #### <p align="center">  Description </p>
