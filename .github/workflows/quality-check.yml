@@ -18,3 +18,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  codecov:
+    name: Codecov
+    runs-on: ubuntu-latest
+    steps:
+      - name: Codecov
+        uses: codecov/codecov-action@v3.0.0
