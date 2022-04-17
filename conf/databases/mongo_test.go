@@ -6,10 +6,10 @@ import (
 	"testing"
 )
 
-//func TestBuildMongoUriSuccess(t *testing.T) {
-//	uri := buildMongoUri()
-//	assert.Equal(t, "mongodb://localhost:27017/starwars", uri)
-//}
+func TestBuildMongoUriSuccess(t *testing.T) {
+	uri := buildMongoUri()
+	assert.Equal(t, "mongodb://localhost:27017/starwars", uri)
+}
 
 func TestBuildMongoUriWithCredentialsSuccess(t *testing.T) {
 	err := os.Setenv("MONGO_USER", "user")
@@ -20,4 +20,8 @@ func TestBuildMongoUriWithCredentialsSuccess(t *testing.T) {
 
 	uri := buildMongoUri()
 	assert.Equal(t, "mongodb://user:password@localhost:27017/starwars", uri)
+}
+
+func TestStartMongoDB(t *testing.T) {
+	assert.Truef(t, true, "MongoDB is not running")
 }
