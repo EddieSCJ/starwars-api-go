@@ -22,5 +22,13 @@ jobs:
     name: Codecov
     runs-on: ubuntu-latest
     steps:
-      - name: Codecov
-        uses: codecov/codecov-action@v3.0.0
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '1.14'
+      - name: Run coverage
+        run: go test -race -coverprofile=coverage.txt -covermode=atomic
+      - name: Upload coverage to Codecov
+        run: bash <(curl -s https://codecov.io/bash)
