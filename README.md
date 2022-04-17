@@ -14,4 +14,15 @@ This api is a simple wrapper for the [Star Wars API](https://swapi.dev/) where y
 planets, starships, vehicles, species, films, and more with a few extra features where you can handle this data however you 
 need.
 
-Please, read the content above to know how to use this api and if is there any doubt, please, contact me.
+Please, read the content below to know how to use this api and if is there any doubt, please, contact me.
+
+#### <p align="center">  Using Cloud Tools </p>
+
+* Snyk
+    * Just click in the link above and search for starwars-api-go, so you will be able to see the security problems.
+* SonarCloud
+    * Clicking the link above you will be redirected to the quality analysis of this project.
+* CodeCov
+    * You can click the link above and see the code coverage details by commit or any type of data or just see the summary in your PR.
+* GolangCI-Lint
+    * You are able to see it in the actions tab, most specifically in the Lint Check job.
