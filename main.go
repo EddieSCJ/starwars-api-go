@@ -1,5 +1,7 @@
 package main
 
+import "starwars-api-go/conf/databases"
+
 func main() {
-	println("Hello, world.")
+	databases.StartMongoDB()
 }
