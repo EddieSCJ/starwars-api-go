@@ -8,7 +8,7 @@ comment:
 
 coverage:
   precision: 2
-  range: 80...100
+  range: 10...20
   round: up
   status:
     changes: false
