@@ -6,28 +6,40 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  steps:
-    name: Quality Check
+  sonarcloud:
+    name: SonarCloud
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - uses: actions/setup-go@v3
-        with:
-          go-version: 1.18
-
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
+  codecov:
+    name: Codecov
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '1.18'
       - name: Run coverage
         run: go test -race -coverprofile=coverage.txt -covermode=atomic
-
       - name: Upload coverage to Codecov
         run: bash <(curl -s https://codecov.io/bash)
-
+  golangci:
+    name: Lint Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+      - uses: actions/checkout@v3
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v3.1.0
+
