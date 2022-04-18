@@ -34,7 +34,7 @@ func pullMongoImage(pool *dockertest.Pool) (*dockertest.Resource, error) {
 		Name:       "mongoservice",
 		Tag:        "5.0",
 		PortBindings: map[docker.Port][]docker.PortBinding{
-			"27017/tcp": {{HostIP: "localhost", HostPort: "27017"}},
+			"27017/tcp": {{HostIP: "", HostPort: "27017"}},
 		},
 	}, func(config *docker.HostConfig) {
 		config.AutoRemove = true
