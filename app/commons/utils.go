@@ -2,7 +2,7 @@ package commons
 
 import "os"
 
-func GetEnvVar(key, defaultValue string) string {
+func GetEnv(key, defaultValue string) string {
 	value := os.Getenv(key)
 	if value == "" {
 		return defaultValue

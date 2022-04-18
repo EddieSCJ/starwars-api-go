@@ -1,22 +1,24 @@
-package storage
+package nosql
 
 import (
 	"context"
+	"time"
+
+	"starwars-api-go/app/commons"
+
 	"github.com/rs/zerolog/log"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"starwars-api-go/app/commons"
-	"time"
 )
 
-func StartMongoDB() (*mongo.Client, context.CancelFunc) {
+const timeout = 10 * time.Second
+
+func StartDB() (*mongo.Client, context.CancelFunc) {
 	log.Info().Msg("Connecting to MongoDB")
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	mongoUri := buildMongoUri()
-
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(mongoUri))
-
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	mongoURI := buildMongoURI()
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(mongoURI))
 	if err != nil {
 		defer cancel()
 		log.Error().Msgf("Error creating options to connect to MongoDB: %s", err.Error())
@@ -30,16 +32,16 @@ func StartMongoDB() (*mongo.Client, context.CancelFunc) {
 		return nil, cancel
 	}
 
-	log.Info().Msg("Connected to MongoDB")
+	log.Info().Msg("Connected to MongoDB successfully")
 	return client, cancel
 }
 
-func buildMongoUri() string {
-	host := commons.GetEnvVar("MONGO_HOST", "localhost")
-	port := commons.GetEnvVar("MONGO_PORT", "27017")
-	username := commons.GetEnvVar("MONGO_USER", "")
-	password := commons.GetEnvVar("MONGO_PASSWORD", "")
-	database := commons.GetEnvVar("MONGO_DB", "starwars")
+func buildMongoURI() string {
+	host := commons.GetMongoHost()
+	port := commons.GetMongoPort()
+	username := commons.GetMongoUsername()
+	password := commons.GetMongoPassword()
+	database := commons.GetMongoDBName()
 
 	if username != "" && password != "" {
 		return "mongodb://" + username + ":" + password + "@" + host + ":" + port + "/" + database
