@@ -1,4 +1,4 @@
-package storage
+package nosql
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func StartMongoDB() (*mongo.Client, context.CancelFunc) {
+func StartDB() (*mongo.Client, context.CancelFunc) {
 	log.Info().Msg("Connecting to MongoDB")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -30,16 +30,17 @@ func StartMongoDB() (*mongo.Client, context.CancelFunc) {
 		return nil, cancel
 	}
 
+	log.Error().Msg(mongoUri)
 	log.Info().Msg("Connected to MongoDB")
 	return client, cancel
 }
 
 func buildMongoUri() string {
-	host := commons.GetEnvVar("MONGO_HOST", "localhost")
-	port := commons.GetEnvVar("MONGO_PORT", "27017")
-	username := commons.GetEnvVar("MONGO_USER", "")
-	password := commons.GetEnvVar("MONGO_PASSWORD", "")
-	database := commons.GetEnvVar("MONGO_DB", "starwars")
+	host := commons.GetEnv("MONGO_HOST", "localhost")
+	port := commons.GetEnv("MONGO_PORT", "27017")
+	username := commons.GetEnv("MONGO_USER", "")
+	password := commons.GetEnv("MONGO_PASSWORD", "")
+	database := commons.GetEnv("MONGO_DB", "starwars")
 
 	if username != "" && password != "" {
 		return "mongodb://" + username + ":" + password + "@" + host + ":" + port + "/" + database

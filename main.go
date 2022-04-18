@@ -1,7 +1,9 @@
 package main
 
-import "starwars-api-go/conf/storage"
+import (
+	"starwars-api-go/conf/storage/nosql"
+)
 
 func main() {
-	storage.StartMongoDB()
+	nosql.StartDB()
 }
