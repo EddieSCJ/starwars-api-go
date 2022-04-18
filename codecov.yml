@@ -16,7 +16,7 @@ coverage:
       flag_coverage_not_uploaded_behavior: include
     patch:
       default:
-        target: 60...100
+        target: 80...100
     project:
       default:
         target: 80%
