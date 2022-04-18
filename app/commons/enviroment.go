@@ -5,7 +5,7 @@ func GetMongoHost() string {
 }
 
 func GetMongoUsername() string {
-	return GetEnv("MONGO_PASSWORD", "")
+	return GetEnv("MONGO_USER", "")
 }
 
 func GetMongoPassword() string {
