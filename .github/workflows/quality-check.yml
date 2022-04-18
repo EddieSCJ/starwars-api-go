@@ -31,7 +31,7 @@ jobs:
       - name: check
         run: docker ps
       - name: Run coverage
-        run: go test ./... -tags integration
+        run: go test -p 1 -tags integration -race -coverprofile=coverage.txt -covermode=atomic ./...
       - name: check
         run: docker ps
       - name: Upload coverage to Codecov
