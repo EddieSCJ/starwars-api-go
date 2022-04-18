@@ -16,7 +16,6 @@ var dbClient *mongo.Client
 const tcpPort = "27017/tcp"
 
 func StartDBContainer(pool *dockertest.Pool) (*dockertest.Resource, error) {
-
 	resource, err := pullMongoImage(pool)
 	if err != nil {
 		log.Error().Msgf("Could not start Mongo Image: %s", err)
@@ -68,7 +67,6 @@ func makeReadyToAcceptConnections(pool *dockertest.Pool, resource *dockertest.Re
 }
 
 func RemoveDBContainer(pool *dockertest.Pool) {
-
 	if err := pool.RemoveContainerByName(commons.GetMongoContainerName()); err != nil {
 		log.Error().Msgf("Could not purge resource: %s", err)
 	}

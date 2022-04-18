@@ -13,8 +13,8 @@ func StartDB() (*mongo.Client, context.CancelFunc) {
 	log.Info().Msg("Connecting to MongoDB")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	mongoUri := buildMongoUri()
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(mongoUri))
+	mongoURI := buildMongoURI()
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(mongoURI))
 
 	if err != nil {
 		defer cancel()
@@ -33,7 +33,7 @@ func StartDB() (*mongo.Client, context.CancelFunc) {
 	return client, cancel
 }
 
-func buildMongoUri() string {
+func buildMongoURI() string {
 	host := commons.GetMongoHost()
 	port := commons.GetMongoPort()
 	username := commons.GetMongoUsername()

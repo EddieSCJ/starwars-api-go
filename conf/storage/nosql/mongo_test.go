@@ -15,13 +15,13 @@ var (
 )
 
 func TestBuildMongoUriSuccess(t *testing.T) {
-	uri := buildMongoUri()
+	uri := buildMongoURI()
 	assert.Equal(t, fmt.Sprintf("mongodb://%s:%s/%s", host, port, database), uri)
 }
 
 func TestBuildMongoUriWithCredentialsSuccess(t *testing.T) {
 	changeCredentials("user", "password")
-	uri := buildMongoUri()
+	uri := buildMongoURI()
 	assert.Equal(t, fmt.Sprintf("mongodb://user:password@%s:%s/%s", host, port, database), uri)
 	changeCredentials("", "")
 }
