@@ -38,3 +38,9 @@ func changeCredentials(user, password string) {
 		log.Error().Err(err).Msg("Error setting env variable MONGO_PASSWORD")
 	}
 }
+
+func BenchmarkBuildMongoUri(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		buildMongoURI()
+	}
+}
