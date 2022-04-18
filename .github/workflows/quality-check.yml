@@ -28,9 +28,12 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version: 1.18
-      - name: Run coverage
+      - name: check
         run: docker ps
-#        run: go test ./... -race -coverprofile=coverage.txt -covermode=atomic -tags integration
+      - name: Run coverage
+        run: go test ./... -race -coverprofile=coverage.txt -covermode=atomic -tags integration
+      - name: check
+        run: docker ps
       - name: Upload coverage to Codecov
         run: bash <(curl -s https://codecov.io/bash)
   golangci:
