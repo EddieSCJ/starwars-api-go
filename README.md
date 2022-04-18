@@ -34,6 +34,6 @@ To run the unit tests you just need to type: `go test ./...` in your terminal an
 
 However, our integrated tests are running with DockerTest to reproduce more realistic scenarios, so, we need some extra commands, nothing scaring, firstly, make sure you have [Docker](https://docs.docker.com/engine/install/) installed in your machine and type `go test -p 1 -tags integration ./...` in your terminal.
 
-:grey_question: What exactly is this -p 1 :grey_question:
+:grey_question: What exactly is this `-p 1` :grey_question:
 
 The Go Programming language run the test packages in parallel, so, it's possible our docker containers being not ready before some integrations test. To make sure it will not happen, we limit the threads to only one.
