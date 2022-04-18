@@ -9,6 +9,5 @@ import (
 
 func TestStartDBSuccessfully(t *testing.T) {
 	client, _ := StartDB()
-	assert.Nil(t, nil)
 	assert.NotNil(t, client)
 }
