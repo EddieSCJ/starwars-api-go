@@ -26,3 +26,11 @@ Please, read the content below to know how to use this api and if is there any d
     * You can click the link above and see the code coverage details by commit or any type of data or just see the summary in your PR.
 * GolangCI-Lint
     * You are able to see it in the actions tab, most specifically in the Lint Check job.
+
+#### <p align="center">  Testing </p>
+
+There are two types of tests which are used in this project, unit and integrated tests.
+To run the unit tests you just need to type: `go test ./...` in your terminal and wait to see magic happens.
+
+However, our integrated tests are running with DockerTest to reproduce more realistic scenarios, so, we need some extra commands, nothing scaring, firstly, make sure you have [Docker](https://docs.docker.com/engine/install/) installed in your machine and type `go test -p 1 -tags integration ./...` in your terminal.
+
