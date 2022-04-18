@@ -3,12 +3,14 @@ package nosql
 import (
 	"context"
 	"fmt"
+
+	"starwars-api-go/app/commons"
+
 	"github.com/ory/dockertest"
 	"github.com/ory/dockertest/docker"
 	"github.com/rs/zerolog/log"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"starwars-api-go/app/commons"
 )
 
 var dbClient *mongo.Client

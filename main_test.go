@@ -3,11 +3,13 @@
 package main
 
 import (
+	"os"
+	"testing"
+
 	"github.com/ory/dockertest"
 	"github.com/rs/zerolog/log"
-	"os"
+
 	"starwars-api-go/conf/storage/nosql"
-	"testing"
 )
 
 var pool *dockertest.Pool

@@ -2,20 +2,23 @@ package nosql
 
 import (
 	"context"
+	"time"
+
+	"starwars-api-go/app/commons"
+
 	"github.com/rs/zerolog/log"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"starwars-api-go/app/commons"
-	"time"
 )
+
+const timeout = 10 * time.Second
 
 func StartDB() (*mongo.Client, context.CancelFunc) {
 	log.Info().Msg("Connecting to MongoDB")
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	mongoURI := buildMongoURI()
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(mongoURI))
-
 	if err != nil {
 		defer cancel()
 		log.Error().Msgf("Error creating options to connect to MongoDB: %s", err.Error())

@@ -2,10 +2,11 @@ package nosql
 
 import (
 	"fmt"
-	"github.com/rs/zerolog/log"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+
+	"github.com/rs/zerolog/log"
+	"github.com/stretchr/testify/assert"
 )
 
 var (
