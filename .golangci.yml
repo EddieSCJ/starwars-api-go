@@ -59,9 +59,6 @@ linters:
     - goconst
     - gocritic
     - gofmt
-    - gofumpt
-    - goimports
-    - gomnd
     - goprintffuncname
     - govet
     - gosimple
