@@ -1,21 +1,28 @@
 package nosql
 
 import (
+	"fmt"
 	"github.com/rs/zerolog/log"
 	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
 )
 
+var (
+	host     = "localhost"
+	port     = "27017"
+	database = "development"
+)
+
 func TestBuildMongoUriSuccess(t *testing.T) {
 	uri := buildMongoUri()
-	assert.Equal(t, "mongodb://localhost:27017/starwars", uri)
+	assert.Equal(t, fmt.Sprintf("mongodb://%s:%s/%s", host, port, database), uri)
 }
 
 func TestBuildMongoUriWithCredentialsSuccess(t *testing.T) {
 	changeCredentials("user", "password")
 	uri := buildMongoUri()
-	assert.Equal(t, "mongodb://user:password@localhost:27017/starwars", uri)
+	assert.Equal(t, fmt.Sprintf("mongodb://user:password@%s:%s/%s", host, port, database), uri)
 	changeCredentials("", "")
 }
 

@@ -14,7 +14,6 @@ func StartDB() (*mongo.Client, context.CancelFunc) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	mongoUri := buildMongoUri()
-
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(mongoUri))
 
 	if err != nil {
@@ -30,17 +29,16 @@ func StartDB() (*mongo.Client, context.CancelFunc) {
 		return nil, cancel
 	}
 
-	log.Error().Msg(mongoUri)
-	log.Info().Msg("Connected to MongoDB")
+	log.Info().Msg("Connected to MongoDB successfully")
 	return client, cancel
 }
 
 func buildMongoUri() string {
-	host := commons.GetEnv("MONGO_HOST", "localhost")
-	port := commons.GetEnv("MONGO_PORT", "27017")
-	username := commons.GetEnv("MONGO_USER", "")
-	password := commons.GetEnv("MONGO_PASSWORD", "")
-	database := commons.GetEnv("MONGO_DB", "starwars")
+	host := commons.GetMongoHost()
+	port := commons.GetMongoPort()
+	username := commons.GetMongoUsername()
+	password := commons.GetMongoPassword()
+	database := commons.GetMongoDBName()
 
 	if username != "" && password != "" {
 		return "mongodb://" + username + ":" + password + "@" + host + ":" + port + "/" + database

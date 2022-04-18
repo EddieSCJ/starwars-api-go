@@ -23,8 +23,8 @@ func StartDocker() {
 
 func TestMain(m *testing.M) {
 	StartDocker()
-	nosql.RemoveDBContainer(pool)
 
+	nosql.RemoveDBContainer(pool)
 	_, err := nosql.StartDBContainer(pool)
 	if err != nil {
 		log.Error().Msgf("Could not start MongoDB: %s", err)

@@ -8,9 +8,12 @@ import (
 	"github.com/rs/zerolog/log"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"starwars-api-go/app/commons"
 )
 
 var dbClient *mongo.Client
+
+const tcpPort = "27017/tcp"
 
 func StartDBContainer(pool *dockertest.Pool) (*dockertest.Resource, error) {
 
@@ -31,10 +34,10 @@ func StartDBContainer(pool *dockertest.Pool) (*dockertest.Resource, error) {
 func pullMongoImage(pool *dockertest.Pool) (*dockertest.Resource, error) {
 	resource, err := pool.RunWithOptions(&dockertest.RunOptions{
 		Repository: "mongo",
-		Name:       "mongoservice",
+		Name:       commons.GetMongoContainerName(),
 		Tag:        "5.0",
 		PortBindings: map[docker.Port][]docker.PortBinding{
-			"27017/tcp": {{HostIP: "", HostPort: "27017"}},
+			tcpPort: {{HostIP: "", HostPort: commons.GetMongoPort()}},
 		},
 	}, func(config *docker.HostConfig) {
 		config.AutoRemove = true
@@ -52,7 +55,7 @@ func makeReadyToAcceptConnections(pool *dockertest.Pool, resource *dockertest.Re
 		dbClient, err = mongo.Connect(
 			context.TODO(),
 			options.Client().ApplyURI(
-				fmt.Sprintf("mongodb://localhost:%s", resource.GetPort("27017/tcp")),
+				fmt.Sprintf("mongodb://localhost:%s", resource.GetPort(tcpPort)),
 			),
 		)
 		if err != nil {
@@ -65,7 +68,8 @@ func makeReadyToAcceptConnections(pool *dockertest.Pool, resource *dockertest.Re
 }
 
 func RemoveDBContainer(pool *dockertest.Pool) {
-	if err := pool.RemoveContainerByName("mongoservice"); err != nil {
+
+	if err := pool.RemoveContainerByName(commons.GetMongoContainerName()); err != nil {
 		log.Error().Msgf("Could not purge resource: %s", err)
 	}
 }
