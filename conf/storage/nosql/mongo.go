@@ -2,6 +2,7 @@ package nosql
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"starwars-api-go/app/commons"
@@ -33,6 +34,7 @@ func StartDB() (*mongo.Client, context.CancelFunc) {
 	}
 
 	log.Info().Msg("Connected to MongoDB successfully")
+	fmt.Println("mongodb:27017")
 	return client, cancel
 }
 
