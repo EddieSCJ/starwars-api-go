@@ -55,7 +55,7 @@ jobs:
         with:
           go-version: 1.18
       - name: Snyk
-      - uses: snyk/actions@0.3.0
+        uses: snyk/actions@0.3.0
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
