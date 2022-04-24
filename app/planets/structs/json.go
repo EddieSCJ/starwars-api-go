@@ -1,4 +1,4 @@
-package view
+package structs
 
 type PlanetJson struct {
 	ID               string   `json:"id"`

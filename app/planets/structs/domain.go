@@ -1,4 +1,4 @@
-package domain
+package structs
 
 type Planet struct {
 	ID               string
