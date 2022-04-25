@@ -1,4 +1,4 @@
-package structs
+package model
 
 import "strings"
 
@@ -9,14 +9,14 @@ type swapiPlanet struct {
 	Films   []string `json:"films"`
 }
 
-type SWAPIPlanetResponse struct {
+type SWAPIResponseBody struct {
 	Count    int           `json:"count"`
 	Next     string        `json:"next"`
 	Previous string        `json:"previous"`
 	Results  []swapiPlanet `json:"results"`
 }
 
-func (r SWAPIPlanetResponse) ToPlanetList() []Planet {
+func (r SWAPIResponseBody) ToPlanetList() []Planet {
 	var planets []Planet
 	for _, planet := range r.Results {
 		planets = append(planets, planet.ToPlanet())
@@ -29,9 +29,9 @@ func (s *swapiPlanet) ToPlanet() Planet {
 	terrains := strings.Split(s.Terrain, ",")
 
 	return Planet{
-		Name:             s.Name,
-		Climate:          climates,
-		Terrain:          terrains,
-		MovieAppearances: len(s.Films),
+		Name:    s.Name,
+		Climate: climates,
+		Terrain: terrains,
+		Films:   s.Films,
 	}
 }

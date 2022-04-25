@@ -1,9 +1,9 @@
-package structs
+package model
 
 import "time"
 
 type PlanetMongo struct {
-	ID               string
+	ID               string `bson:"_id"`
 	Name             string
 	Climate          []string
 	Terrain          []string

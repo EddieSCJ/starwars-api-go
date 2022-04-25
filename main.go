@@ -1,13 +1,18 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-	"starwars-api-go/app/planets/storage"
+	"starwars-api-go/app/planets/list"
 	"starwars-api-go/conf/storage/nosql"
 )
 
 func main() {
-	nosql.StartDB()
-	swapiClient := storage.NewSWAPIClient()
-	fmt.Println(swapiClient.GetPlanets(1))
+	client, _ := nosql.StartDB()
+	starwarsDB := client.Database("starwars")
+
+	rep := list.NewRepository(starwarsDB)
+	a, _ := rep.GetAll()
+	documents, _ := json.Marshal(a)
+	fmt.Println(documents)
 }

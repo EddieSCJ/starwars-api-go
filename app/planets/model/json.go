@@ -1,4 +1,4 @@
-package structs
+package model
 
 type PlanetJson struct {
 	ID               string   `json:"id"`
