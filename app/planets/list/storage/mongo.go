@@ -2,10 +2,11 @@ package storage
 
 import (
 	"context"
+	"starwars-api-go/app/planets/model"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"starwars-api-go/app/planets/model"
 )
 
 type Repository interface {

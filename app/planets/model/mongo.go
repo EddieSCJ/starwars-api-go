@@ -2,6 +2,10 @@ package model
 
 import "time"
 
+const (
+	dayInHours = 24
+)
+
 type PlanetMongo struct {
 	ID               string `bson:"_id"`
 	Name             string
@@ -13,7 +17,7 @@ type PlanetMongo struct {
 
 func (m PlanetMongo) ToDomain() Planet {
 	difference := time.Now().Sub(m.CreationDate)
-	cacheInDays := difference.Hours() / 24
+	cacheInDays := difference.Hours() / dayInHours
 	return Planet{
 		ID:               m.ID,
 		Name:             m.Name,
