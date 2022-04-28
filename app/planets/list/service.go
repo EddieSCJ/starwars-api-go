@@ -1,25 +1,33 @@
 package list
 
 import (
+	"starwars-api-go/app/planets/list/gateway"
+	"starwars-api-go/app/planets/list/storage"
 	"starwars-api-go/app/planets/model"
 )
 
 type Service interface {
-	GetAll() ([]model.Planet, error)
+	GetAll(filter Filter) ([]model.Planet, error)
 }
 
 type service struct {
-	gateway    SWAPIGateway
-	repository Repository
+	gateway    gateway.SWAPIGateway
+	repository storage.Repository
 }
 
-func NewService() Service {
+func NewService(repository storage.Repository, gateway gateway.SWAPIGateway) Service {
 	return &service{
-		gateway:    NewSWAPIGateway(),
-		repository: nil,
+		gateway:    gateway,
+		repository: repository,
 	}
 }
 
-func (s service) GetAll() ([]model.Planet, error) {
-	return []model.Planet{}, nil
+func (s service) GetAll(filter Filter) ([]model.Planet, error) {
+	options := storage.NewMongoOptions(filter.offset, filter.limit)
+	mongoResultPlanets, err := s.repository.GetAll(options)
+	if err != nil {
+		return nil, err
+	}
+
+	return model.ToDomainList(mongoResultPlanets), nil
 }

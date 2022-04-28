@@ -16,22 +16,22 @@ type SWAPIResponseBody struct {
 	Results  []swapiPlanet `json:"results"`
 }
 
-func (r SWAPIResponseBody) ToPlanetList() []Planet {
+func (r SWAPIResponseBody) ToDomainList() []Planet {
 	var planets []Planet
 	for _, planet := range r.Results {
-		planets = append(planets, planet.ToPlanet())
+		planets = append(planets, planet.ToDomain())
 	}
 	return planets
 }
 
-func (s *swapiPlanet) ToPlanet() Planet {
+func (s *swapiPlanet) ToDomain() Planet {
 	climates := strings.Split(s.Climate, ",")
 	terrains := strings.Split(s.Terrain, ",")
 
 	return Planet{
-		Name:    s.Name,
-		Climate: climates,
-		Terrain: terrains,
-		Films:   s.Films,
+		Name:             s.Name,
+		Climate:          climates,
+		Terrain:          terrains,
+		MovieAppearances: len(s.Films),
 	}
 }

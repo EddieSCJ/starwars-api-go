@@ -5,7 +5,7 @@ import "net/http"
 type HttpError struct {
 	Code           int      `json:"code"`
 	Message        string   `json:"message"`
-	AdditionalInfo []string `json:"description"`
+	AdditionalInfo []string `json:"additionalInfo"`
 }
 
 func NewBadGatewayError(client, message string) *HttpError {

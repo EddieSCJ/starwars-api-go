@@ -1,4 +1,4 @@
-package list
+package gateway
 
 import (
 	"net/http"
@@ -32,11 +32,11 @@ func (s swapiGateway) GetPlanets(filter Filter) (*http.Response, error) {
 	}
 
 	query := req.URL.Query()
-	if filter.Name != "" {
-		query.Add("name", filter.Name)
+	if filter.name != "" {
+		query.Add("name", filter.name)
 	}
-	if filter.Page != "" {
-		query.Add("page", filter.Page)
+	if filter.page != "" {
+		query.Add("page", filter.page)
 	}
 
 	resp, err := s.client.Do(req)
