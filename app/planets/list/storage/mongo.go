@@ -9,26 +9,21 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type Repository interface {
-	Count() (int64, error)
-	GetAll(findOptions MongoOptions) ([]model.PlanetMongo, error)
-}
-
-type repository struct {
+type MongoStore struct {
 	collection *mongo.Collection
 }
 
-func NewRepository(client *mongo.Database) Repository {
-	return &repository{
+func NewMongoRepository(client *mongo.Database) *MongoStore {
+	return &MongoStore{
 		collection: client.Collection("planets"),
 	}
 }
 
-func (r repository) Count() (int64, error) {
+func (r *MongoStore) Count() (int64, error) {
 	return r.collection.CountDocuments(context.Background(), bson.M{})
 }
 
-func (r repository) GetAll(mongoOptions MongoOptions) ([]model.PlanetMongo, error) {
+func (r *MongoStore) GetAll(mongoOptions MongoOptions) (interface{}, error) {
 	findOptions := options.Find().
 		SetSkip(mongoOptions.offset).
 		SetLimit(mongoOptions.limit)
@@ -38,7 +33,8 @@ func (r repository) GetAll(mongoOptions MongoOptions) ([]model.PlanetMongo, erro
 		return nil, err
 	}
 
-	var planets []model.PlanetMongo
+	size := mongoOptions.limit - mongoOptions.offset
+	planets := make([]model.PlanetMongo, size)
 	if err := cursor.All(nil, &planets); err != nil {
 		return nil, err
 	}

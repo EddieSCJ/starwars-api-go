@@ -5,17 +5,13 @@ import (
 	"starwars-api-go/app/commons"
 )
 
-type SWAPIGateway interface {
-	GetPlanets(filter Filter) (*http.Response, error)
-}
-
-type swapiGateway struct {
+type SWAPIGateway struct {
 	client  *http.Client
 	baseURL string
 }
 
-func NewSWAPIGateway() SWAPIGateway {
-	gateway := new(swapiGateway)
+func NewSWAPIGateway() *SWAPIGateway {
+	gateway := new(SWAPIGateway)
 	gateway.baseURL = commons.GetSWAPIURL()
 	gateway.client = &http.Client{
 		Timeout: commons.GetDefaultTimeout(),
@@ -24,7 +20,7 @@ func NewSWAPIGateway() SWAPIGateway {
 	return gateway
 }
 
-func (s swapiGateway) GetPlanets(filter Filter) (*http.Response, error) {
+func (s SWAPIGateway) GetPlanets(filter Filter) (*http.Response, error) {
 	url := s.baseURL + "/planets"
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
