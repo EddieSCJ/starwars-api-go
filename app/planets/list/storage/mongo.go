@@ -2,9 +2,10 @@ package storage
 
 import (
 	"context"
+	"starwars-api-go/app/planets/model"
+
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
-	"starwars-api-go/app/planets/model"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"

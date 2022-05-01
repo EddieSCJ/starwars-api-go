@@ -2,10 +2,11 @@ package gateway
 
 import (
 	"context"
-	"github.com/pkg/errors"
-	"github.com/rs/zerolog/log"
 	"net/http"
 	"starwars-api-go/app/commons"
+
+	"github.com/pkg/errors"
+	"github.com/rs/zerolog/log"
 )
 
 type SWAPIGateway struct {
