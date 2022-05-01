@@ -21,14 +21,14 @@ func StartDB() (*mongo.Client, context.CancelFunc) {
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(mongoURI))
 	if err != nil {
 		defer cancel()
-		log.Error().Msgf("Error creating options to connect to MongoDB: %s", err.Error())
+		log.Err(err).Msgf("Error creating options to connect to MongoDB: %s", err.Error())
 		return nil, cancel
 	}
 
 	pingErr := client.Ping(ctx, nil)
 	if pingErr != nil {
 		defer cancel()
-		log.Error().Msgf("Error connecting to MongoDB: %s", pingErr.Error())
+		log.Err(err).Msgf("Error connecting to MongoDB: %s", pingErr.Error())
 		return nil, cancel
 	}
 

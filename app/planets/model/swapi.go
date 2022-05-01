@@ -17,7 +17,7 @@ type SWAPIResponseBody struct {
 }
 
 func (r SWAPIResponseBody) ToDomainList() []Planet {
-	var planets []Planet
+	planets := make([]Planet, 0, len(r.Results))
 	for _, planet := range r.Results {
 		planets = append(planets, planet.ToDomain())
 	}

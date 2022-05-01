@@ -1,6 +1,8 @@
 package gateway
 
 import (
+	"context"
+	"github.com/pkg/errors"
 	"net/http"
 	"starwars-api-go/app/commons"
 )
@@ -20,11 +22,11 @@ func NewSWAPIGateway() *SWAPIGateway {
 	return gateway
 }
 
-func (s SWAPIGateway) GetPlanets(filter Filter) (*http.Response, error) {
+func (s SWAPIGateway) GetPlanets(ctx context.Context, filter Filter) (*http.Response, error) {
 	url := s.baseURL + "/planets"
-	req, err := http.NewRequest(http.MethodGet, url, nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "error while building request to get planets in swapi client")
 	}
 
 	query := req.URL.Query()
@@ -37,7 +39,7 @@ func (s SWAPIGateway) GetPlanets(filter Filter) (*http.Response, error) {
 
 	resp, err := s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "error while perfoming request to swapi client")
 	}
 
 	return resp, nil

@@ -1,12 +1,13 @@
 package list
 
 import (
+	"context"
 	"starwars-api-go/app/planets/list/storage"
 	"starwars-api-go/app/planets/model"
 )
 
 type PlanetStore interface {
-	GetAll(options storage.MongoOptions) (interface{}, error)
+	GetAll(ctx context.Context, options storage.MongoOptions) (interface{}, error)
 }
 
 type Service struct {
@@ -19,9 +20,9 @@ func NewService(planetStore PlanetStore) *Service {
 	}
 }
 
-func (s *Service) GetAll(filter Filter) (interface{}, error) {
+func (s *Service) GetAll(ctx context.Context, filter Filter) (interface{}, error) {
 	options := storage.NewMongoOptions(filter.offset, filter.limit)
-	result, err := s.planetStore.GetAll(options)
+	result, err := s.planetStore.GetAll(ctx, options)
 	if err != nil {
 		return nil, err
 	}
