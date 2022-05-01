@@ -3,6 +3,7 @@ package storage
 import (
 	"context"
 	"github.com/pkg/errors"
+	"github.com/rs/zerolog/log"
 	"starwars-api-go/app/planets/model"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -20,7 +21,17 @@ func NewMongoRepository(client *mongo.Database) *MongoStore {
 }
 
 func (r *MongoStore) Count(ctx context.Context) (int64, error) {
-	return r.collection.CountDocuments(ctx, bson.M{})
+	log.Info().Msgf("Starting count documents in database.")
+
+	result, err := r.collection.CountDocuments(ctx, bson.M{})
+	if err != nil {
+		message := "error while counting documents in database"
+		log.Err(err).Msg(message)
+		return 0, errors.Wrap(err, message)
+	}
+
+	log.Info().Msgf("%d documents returned successfully", result)
+	return result, nil
 }
 
 func (r *MongoStore) GetAll(ctx context.Context, mongoOptions MongoOptions) ([]model.PlanetMongo, error) {
@@ -28,7 +39,9 @@ func (r *MongoStore) GetAll(ctx context.Context, mongoOptions MongoOptions) ([]m
 
 	cursor, err := r.collection.Find(ctx, bson.M{}, findOptions)
 	if err != nil {
-		return nil, errors.Wrap(err, "error setting up cursor of planets in database")
+		message := "error setting up cursor of planets in database"
+		log.Err(err).Msg(message)
+		return nil, errors.Wrap(err, message)
 	}
 
 	size := mongoOptions.limit - mongoOptions.offset
@@ -38,7 +51,9 @@ func (r *MongoStore) GetAll(ctx context.Context, mongoOptions MongoOptions) ([]m
 func bindAll(ctx context.Context, size int64, cursor *mongo.Cursor) ([]model.PlanetMongo, error) {
 	planets := make([]model.PlanetMongo, size)
 	if err := cursor.All(ctx, &planets); err != nil {
-		return nil, errors.Wrap(err, "error while binding cursor data to planet mongo type")
+		message := "error while binding cursor data to planet mongo type"
+		log.Err(err).Msg(message)
+		return nil, errors.Wrap(err, message)
 	}
 
 	return planets, nil

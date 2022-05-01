@@ -3,6 +3,7 @@ package gateway
 import (
 	"context"
 	"github.com/pkg/errors"
+	"github.com/rs/zerolog/log"
 	"net/http"
 	"starwars-api-go/app/commons"
 )
@@ -23,12 +24,30 @@ func NewSWAPIGateway() *SWAPIGateway {
 }
 
 func (s SWAPIGateway) GetPlanets(ctx context.Context, filter Filter) (*http.Response, error) {
+	log.Info().Msgf("Starting getting planets from Star Wars API client. name: %s. page: %s", filter.name, filter.page)
+
+	req, err := s.mountRequest(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	setQueryParams(req, filter)
+	return s.performRequest(req, filter)
+}
+
+func (s *SWAPIGateway) mountRequest(ctx context.Context) (*http.Request, error) {
 	url := s.baseURL + "/planets"
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
-		return nil, errors.Wrap(err, "error while building request to get planets in swapi client")
+		message := "error while building request to get planets in swapi client"
+		log.Err(err).Msg(message)
+		return nil, errors.Wrap(err, message)
 	}
 
+	return req, nil
+}
+
+func setQueryParams(req *http.Request, filter Filter) {
 	query := req.URL.Query()
 	if filter.name != "" {
 		query.Add("name", filter.name)
@@ -36,11 +55,16 @@ func (s SWAPIGateway) GetPlanets(ctx context.Context, filter Filter) (*http.Resp
 	if filter.page != "" {
 		query.Add("page", filter.page)
 	}
+}
 
+func (s *SWAPIGateway) performRequest(req *http.Request, filter Filter) (*http.Response, error) {
 	resp, err := s.client.Do(req)
 	if err != nil {
-		return nil, errors.Wrap(err, "error while perfoming request to swapi client")
+		message := "error while performing request to swapi client"
+		log.Err(err).Msg(message)
+		return nil, errors.Wrap(err, message)
 	}
 
+	log.Info().Msgf("Planets retrieved with success. name: %s. page: %s", filter.name, filter.page)
 	return resp, nil
 }

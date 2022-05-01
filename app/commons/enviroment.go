@@ -1,9 +1,18 @@
 package commons
 
 import (
+	"os"
 	"strconv"
 	"time"
 )
+
+func GetEnv(key, defaultValue string) string {
+	value := os.Getenv(key)
+	if value == "" {
+		return defaultValue
+	}
+	return value
+}
 
 func GetMongoHost() string {
 	return GetEnv("MONGO_HOST", "localhost")
