@@ -39,7 +39,7 @@ func GetMongoContainerName() string {
 }
 
 func GetSWAPIURL() string {
-	return GetEnv("SWAPI_URL", "https://swapi.dev/api/")
+	return GetEnv("SWAPI_URL", "https://swapi.dev/api")
 }
 
 func GetDefaultTimeout() time.Duration {
