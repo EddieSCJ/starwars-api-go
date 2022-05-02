@@ -7,7 +7,7 @@ import (
 )
 
 type PlanetStore interface {
-	GetAll(ctx context.Context, options storage.MongoOptions) (interface{}, error)
+	FindAll(ctx context.Context, options storage.MongoOptions) (interface{}, error)
 }
 
 type Service struct {
@@ -22,7 +22,7 @@ func NewService(planetStore PlanetStore) *Service {
 
 func (s *Service) GetAll(ctx context.Context, filter Filter) ([]model.Planet, error) {
 	options := storage.NewMongoOptions(filter.offset, filter.limit)
-	result, err := s.planetStore.GetAll(ctx, options)
+	result, err := s.planetStore.FindAll(ctx, options)
 	if err != nil {
 		return nil, err
 	}

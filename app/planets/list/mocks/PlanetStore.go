@@ -18,7 +18,7 @@ type PlanetStore struct {
 }
 
 // GetAll provides a mock function with given fields: ctx, options
-func (_m *PlanetStore) GetAll(ctx context.Context, options storage.MongoOptions) (interface{}, error) {
+func (_m *PlanetStore) FindAll(ctx context.Context, options storage.MongoOptions) (interface{}, error) {
 	ret := _m.Called(ctx, options)
 
 	var r0 interface{}
