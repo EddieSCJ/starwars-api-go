@@ -31,7 +31,7 @@ func TestGetAll(t *testing.T) {
 	}{
 		{
 			name:           "Empty Result",
-			mockMethodName: "GetAll",
+			mockMethodName: "FindAll",
 			mockMethodParams: func() (interface{}, interface{}) {
 				return context.TODO(), mock.Anything
 			},
@@ -40,7 +40,7 @@ func TestGetAll(t *testing.T) {
 		},
 		{
 			name:           "Not Empty Result",
-			mockMethodName: "GetAll",
+			mockMethodName: "FindAll",
 			mockMethodParams: func() (interface{}, interface{}) {
 				return context.TODO(), mock.Anything
 			},
@@ -77,7 +77,7 @@ func TestGetAllFail(t *testing.T) {
 	planetStore := new(mocks.PlanetStore)
 	service := NewService(planetStore)
 
-	planetStore.On("GetAll", mock.Anything, mock.Anything).Return(nil, errors.New("error"))
+	planetStore.On("FindAll", mock.Anything, mock.Anything).Return(nil, errors.New("error"))
 	planets, err := service.GetAll(context.TODO(), Filter{offset: 2, limit: 10})
 
 	assert.Error(t, err)

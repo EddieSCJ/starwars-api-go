@@ -15,9 +15,9 @@ type MongoStore struct {
 	collection *mongo.Collection
 }
 
-func NewMongoRepository(client *mongo.Database) *MongoStore {
+func NewMongoStore(client *mongo.Client) *MongoStore {
 	return &MongoStore{
-		collection: client.Collection("planets"),
+		collection: client.Database("starwars").Collection("planets"),
 	}
 }
 
@@ -35,7 +35,7 @@ func (r *MongoStore) Count(ctx context.Context) (int64, error) {
 	return result, nil
 }
 
-func (r *MongoStore) GetAll(ctx context.Context, mongoOptions MongoOptions) ([]model.PlanetMongo, error) {
+func (r *MongoStore) FindAll(ctx context.Context, mongoOptions MongoOptions) ([]model.PlanetMongo, error) {
 	findOptions := mongoOptions.Build()
 
 	cursor, err := r.collection.Find(ctx, bson.M{}, findOptions)
