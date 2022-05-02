@@ -20,7 +20,7 @@ func NewService(planetStore PlanetStore) *Service {
 	}
 }
 
-func (s *Service) GetAll(ctx context.Context, filter Filter) (interface{}, error) {
+func (s *Service) GetAll(ctx context.Context, filter Filter) ([]model.Planet, error) {
 	options := storage.NewMongoOptions(filter.offset, filter.limit)
 	result, err := s.planetStore.GetAll(ctx, options)
 	if err != nil {

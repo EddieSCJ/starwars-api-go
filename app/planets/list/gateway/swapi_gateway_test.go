@@ -24,6 +24,7 @@ func TestMountRequest(t *testing.T) {
 }
 
 func TestSetNameQueryParam(t *testing.T) {
+	t.Parallel()
 	g := NewSWAPIGateway()
 	req, err := g.mountRequest(context.TODO(), "planets")
 	if err != nil {
@@ -35,6 +36,7 @@ func TestSetNameQueryParam(t *testing.T) {
 }
 
 func TestSetPageParam(t *testing.T) {
+	t.Parallel()
 	g := NewSWAPIGateway()
 	req, err := g.mountRequest(context.TODO(), "planets")
 	if err != nil {
@@ -46,6 +48,7 @@ func TestSetPageParam(t *testing.T) {
 }
 
 func TestSetAllQueryParams(t *testing.T) {
+	t.Parallel()
 	g := NewSWAPIGateway()
 	req, err := g.mountRequest(context.TODO(), "planets")
 	if err != nil {

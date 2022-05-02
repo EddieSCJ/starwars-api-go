@@ -7,12 +7,14 @@ import (
 )
 
 func TestNewMongoOptions(t *testing.T) {
+	t.Parallel()
 	mongoOptions := NewMongoOptions(3, 12)
 	assert.Equal(t, int64(3), mongoOptions.offset)
 	assert.Equal(t, int64(12), mongoOptions.limit)
 }
 
 func TestBuild(t *testing.T) {
+	t.Parallel()
 	mongoOptions := NewMongoOptions(3, 12)
 	expected := options.FindOptions{
 		Skip:  &mongoOptions.offset,
