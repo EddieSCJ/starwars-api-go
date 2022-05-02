@@ -3,11 +3,12 @@ package list
 import (
 	"context"
 	"errors"
-	"github.com/stretchr/testify/mock"
 	"starwars-api-go/app/planets/list/mocks"
 	"starwars-api-go/app/planets/model"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/mock"
 
 	"github.com/stretchr/testify/assert"
 )
