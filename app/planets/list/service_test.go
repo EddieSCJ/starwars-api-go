@@ -21,7 +21,6 @@ func TestNewService(t *testing.T) {
 }
 
 func TestGetAll(t *testing.T) {
-
 	testTable := []struct {
 		name             string
 		mockMethodName   string

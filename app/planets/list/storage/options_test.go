@@ -1,9 +1,10 @@
 package storage
 
 import (
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"testing"
 )
 
 func TestNewMongoOptions(t *testing.T) {

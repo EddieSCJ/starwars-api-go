@@ -2,9 +2,10 @@ package gateway
 
 import (
 	"context"
-	"github.com/stretchr/testify/assert"
 	"starwars-api-go/app/commons"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestNewSWAPIGateway(t *testing.T) {
