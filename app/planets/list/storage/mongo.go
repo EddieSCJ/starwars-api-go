@@ -35,7 +35,7 @@ func (r *MongoStore) Count(ctx context.Context) (int64, error) {
 	return result, nil
 }
 
-func (r *MongoStore) FindAll(ctx context.Context, mongoOptions MongoOptions) ([]model.PlanetMongo, error) {
+func (r *MongoStore) FindAll(ctx context.Context, mongoOptions MongoOptions) ([]model.PlanetStorageModel, error) {
 	findOptions := mongoOptions.Build()
 	cursor, err := r.collection.Find(ctx, bson.M{}, findOptions)
 	if err != nil {
@@ -48,8 +48,8 @@ func (r *MongoStore) FindAll(ctx context.Context, mongoOptions MongoOptions) ([]
 	return bindAll(ctx, size, cursor)
 }
 
-func bindAll(ctx context.Context, size int64, cursor *mongo.Cursor) ([]model.PlanetMongo, error) {
-	planets := make([]model.PlanetMongo, size)
+func bindAll(ctx context.Context, size int64, cursor *mongo.Cursor) ([]model.PlanetStorageModel, error) {
+	planets := make([]model.PlanetStorageModel, size)
 	if err := cursor.All(ctx, &planets); err != nil {
 		message := "error while binding cursor data to planet mongo type"
 		log.Err(err).Msg(message)

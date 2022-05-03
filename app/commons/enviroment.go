@@ -42,6 +42,10 @@ func GetSWAPIURL() string {
 	return GetEnv("SWAPI_URL", "https://swapi.dev/api")
 }
 
+func GetDefaultAPIPort() string {
+	return GetEnv("API_PORT", "8080")
+}
+
 func GetDefaultTimeout() time.Duration {
 	const defaultTimeout = 100 * time.Second
 	result, err := strconv.Atoi(GetEnv("DEFAULT_TIMEOUT", defaultTimeout.String()))

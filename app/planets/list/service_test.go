@@ -35,7 +35,7 @@ func TestGetAll(t *testing.T) {
 			mockMethodParams: func() (interface{}, interface{}) {
 				return context.TODO(), mock.Anything
 			},
-			mockReturnValue: []model.PlanetMongo{},
+			mockReturnValue: []model.PlanetStorageModel{},
 			expected:        []model.Planet{},
 		},
 		{
@@ -44,7 +44,7 @@ func TestGetAll(t *testing.T) {
 			mockMethodParams: func() (interface{}, interface{}) {
 				return context.TODO(), mock.Anything
 			},
-			mockReturnValue: []model.PlanetMongo{
+			mockReturnValue: []model.PlanetStorageModel{
 				{
 					Name:         "Alderaan",
 					CreationDate: time.Now(),

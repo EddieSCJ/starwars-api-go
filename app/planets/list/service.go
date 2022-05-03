@@ -7,7 +7,7 @@ import (
 )
 
 type PlanetStore interface {
-	FindAll(ctx context.Context, options storage.MongoOptions) (interface{}, error)
+	FindAll(ctx context.Context, options storage.MongoOptions) ([]model.PlanetStorageModel, error)
 }
 
 type Service struct {
@@ -27,5 +27,5 @@ func (s *Service) List(ctx context.Context, filter model.Filter) ([]model.Planet
 		return nil, err
 	}
 
-	return model.MongoToDomainList(result.([]model.PlanetMongo)), nil
+	return model.MongoToDomainList(result), nil
 }

@@ -7,6 +7,8 @@ import (
 
 	mock "github.com/stretchr/testify/mock"
 
+	model "starwars-api-go/app/planets/model"
+
 	storage "starwars-api-go/app/planets/list/storage"
 
 	testing "testing"
@@ -18,15 +20,15 @@ type PlanetStore struct {
 }
 
 // FindAll provides a mock function with given fields: ctx, options
-func (_m *PlanetStore) FindAll(ctx context.Context, options storage.MongoOptions) (interface{}, error) {
+func (_m *PlanetStore) FindAll(ctx context.Context, options storage.MongoOptions) ([]model.PlanetStorageModel, error) {
 	ret := _m.Called(ctx, options)
 
-	var r0 interface{}
-	if rf, ok := ret.Get(0).(func(context.Context, storage.MongoOptions) interface{}); ok {
+	var r0 []model.PlanetStorageModel
+	if rf, ok := ret.Get(0).(func(context.Context, storage.MongoOptions) []model.PlanetStorageModel); ok {
 		r0 = rf(ctx, options)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(interface{})
+			r0 = ret.Get(0).([]model.PlanetStorageModel)
 		}
 	}
 
