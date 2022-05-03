@@ -2,6 +2,11 @@ package storage
 
 import "go.mongodb.org/mongo-driver/mongo/options"
 
+const (
+	defaultOffset = 0
+	defaultLimit  = 10
+)
+
 type MongoOptions struct {
 	offset int64
 	limit  int64
@@ -15,11 +20,11 @@ func (m *MongoOptions) Build() *options.FindOptions {
 	findOptions := options.Find()
 	findOptions.SetSkip(m.offset).SetLimit(m.limit)
 	if m.offset < 0 {
-		options.Find().SetSkip(0)
+		options.Find().SetSkip(defaultOffset)
 	}
 
 	if m.limit == 0 {
-		findOptions.SetLimit(10)
+		findOptions.SetLimit(defaultLimit)
 	}
 
 	if m.offset > m.limit {

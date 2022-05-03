@@ -2,11 +2,12 @@ package list
 
 import (
 	"context"
-	"github.com/labstack/echo/v4"
-	"github.com/rs/zerolog/log"
 	"net/http"
 	"starwars-api-go/app/commons"
 	"starwars-api-go/app/planets/model"
+
+	"github.com/labstack/echo/v4"
+	"github.com/rs/zerolog/log"
 )
 
 type PlanetService interface {

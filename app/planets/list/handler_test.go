@@ -2,10 +2,6 @@ package list
 
 import (
 	"encoding/json"
-	"github.com/labstack/echo/v4"
-	"github.com/pkg/errors"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 	"net/http"
 	"net/http/httptest"
 	"starwars-api-go/app/commons"
@@ -13,6 +9,11 @@ import (
 	"starwars-api-go/app/planets/model"
 	"testing"
 	"time"
+
+	"github.com/labstack/echo/v4"
+	"github.com/pkg/errors"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
 
 func TestListEmpty(t *testing.T) {
@@ -29,7 +30,6 @@ func TestListEmpty(t *testing.T) {
 		assert.Equal(t, http.StatusOK, recorder.Code)
 		assert.Equal(t, "[]\n", recorder.Body.String())
 	}
-
 }
 
 func TestListSuccessfully(t *testing.T) {
