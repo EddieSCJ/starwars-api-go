@@ -65,7 +65,7 @@ func TestGetAll(t *testing.T) {
 			planetStore.On(test.mockMethodName, param1, param2).Return(test.mockReturnValue, nil)
 
 			service := NewService(planetStore)
-			result, err := service.GetAll(context.TODO(), Filter{offset: 2, limit: 10})
+			result, err := service.List(context.TODO(), model.Filter{Offset: 2, Limit: 10})
 
 			assert.Nil(t, err)
 			assert.Equal(t, test.expected, result)
@@ -78,7 +78,7 @@ func TestGetAllFail(t *testing.T) {
 	service := NewService(planetStore)
 
 	planetStore.On("FindAll", mock.Anything, mock.Anything).Return(nil, errors.New("error"))
-	planets, err := service.GetAll(context.TODO(), Filter{offset: 2, limit: 10})
+	planets, err := service.List(context.TODO(), model.Filter{Offset: 2, Limit: 10})
 
 	assert.Error(t, err)
 	assert.Nil(t, planets)

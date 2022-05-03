@@ -3,7 +3,7 @@ package model
 import "strings"
 
 type swapiPlanet struct {
-	Name    string   `json:"name"`
+	Name    string   `json:"Name"`
 	Climate string   `json:"climate"`
 	Terrain string   `json:"terrain"`
 	Films   []string `json:"films"`

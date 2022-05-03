@@ -20,12 +20,12 @@ func NewService(planetStore PlanetStore) *Service {
 	}
 }
 
-func (s *Service) GetAll(ctx context.Context, filter Filter) ([]model.Planet, error) {
-	options := storage.NewMongoOptions(filter.offset, filter.limit)
+func (s *Service) List(ctx context.Context, filter model.Filter) ([]model.Planet, error) {
+	options := storage.NewMongoOptions(filter.Offset, filter.Limit)
 	result, err := s.planetStore.FindAll(ctx, options)
 	if err != nil {
 		return nil, err
 	}
 
-	return model.ToDomainList(result.([]model.PlanetMongo)), nil
+	return model.MongoToDomainList(result.([]model.PlanetMongo)), nil
 }

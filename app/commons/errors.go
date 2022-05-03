@@ -1,6 +1,8 @@
 package commons
 
-import "net/http"
+import (
+	"net/http"
+)
 
 type HttpError struct {
 	Code           int      `json:"code"`
@@ -18,20 +20,40 @@ func NewBadGatewayError(client, message string) *HttpError {
 	}
 }
 
-func NewServiceUnavailableError(client, message string) *HttpError {
+func NewBadRequest(message string) *HttpError {
 	return &HttpError{
-		Code:    http.StatusServiceUnavailable,
-		Message: client + ": unavailable service",
+		Code:    http.StatusBadRequest,
+		Message: "invalid request",
 		AdditionalInfo: []string{
 			message,
 		},
 	}
 }
 
-func NewNotFoundError(client, message string) *HttpError {
+func NewServiceUnavailableError(message string) *HttpError {
+	return &HttpError{
+		Code:    http.StatusServiceUnavailable,
+		Message: "unavailable service",
+		AdditionalInfo: []string{
+			message,
+		},
+	}
+}
+
+func NewNotFoundError(message string) *HttpError {
 	return &HttpError{
 		Code:    http.StatusNotFound,
-		Message: client + ": resource not found",
+		Message: "resource not found",
+		AdditionalInfo: []string{
+			message,
+		},
+	}
+}
+
+func NewInternalServerError(message string) *HttpError {
+	return &HttpError{
+		Code:    http.StatusInternalServerError,
+		Message: "an unknown error occurred",
 		AdditionalInfo: []string{
 			message,
 		},

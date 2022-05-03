@@ -37,7 +37,6 @@ func (r *MongoStore) Count(ctx context.Context) (int64, error) {
 
 func (r *MongoStore) FindAll(ctx context.Context, mongoOptions MongoOptions) ([]model.PlanetMongo, error) {
 	findOptions := mongoOptions.Build()
-
 	cursor, err := r.collection.Find(ctx, bson.M{}, findOptions)
 	if err != nil {
 		message := "error setting up cursor of planets in database"

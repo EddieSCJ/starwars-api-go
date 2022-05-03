@@ -12,7 +12,19 @@ func NewMongoOptions(offset, limit int64) MongoOptions {
 }
 
 func (m *MongoOptions) Build() *options.FindOptions {
-	return options.Find().
-		SetSkip(m.offset).
-		SetLimit(m.limit)
+	findOptions := options.Find()
+	findOptions.SetSkip(m.offset).SetLimit(m.limit)
+	if m.offset < 0 {
+		options.Find().SetSkip(0)
+	}
+
+	if m.limit == 0 {
+		findOptions.SetLimit(10)
+	}
+
+	if m.offset > m.limit {
+		findOptions.SetLimit(m.offset)
+	}
+
+	return findOptions
 }

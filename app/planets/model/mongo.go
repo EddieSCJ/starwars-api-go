@@ -28,7 +28,7 @@ func (m PlanetMongo) ToDomain() Planet {
 	}
 }
 
-func ToDomainList(mongoPlanets []PlanetMongo) []Planet {
+func MongoToDomainList(mongoPlanets []PlanetMongo) []Planet {
 	domainList := make([]Planet, 0, len(mongoPlanets))
 	for _, mongoPlanet := range mongoPlanets {
 		domainList = append(domainList, mongoPlanet.ToDomain())
