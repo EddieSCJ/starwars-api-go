@@ -25,7 +25,8 @@ func NewSWAPIGateway() *SWAPIGateway {
 }
 
 func (s SWAPIGateway) GetPlanets(ctx context.Context, filter Filter) (*http.Response, error) {
-	log.Info().Msgf("Starting getting planets from Star Wars API client. name: %s. page: %s", filter.name, filter.page)
+	logger := log.Ctx(ctx)
+	logger.Info().Msgf("Starting getting planets from Star Wars API client. name: %s. page: %s", filter.name, filter.page)
 
 	req, err := s.mountRequest(ctx, "planets")
 	if err != nil {
@@ -33,15 +34,16 @@ func (s SWAPIGateway) GetPlanets(ctx context.Context, filter Filter) (*http.Resp
 	}
 
 	s.setQueryParams(req, filter)
-	return s.performRequest(req, filter)
+	return s.performRequest(ctx, req, filter)
 }
 
 func (s *SWAPIGateway) mountRequest(ctx context.Context, endpoint string) (*http.Request, error) {
+	logger := log.Ctx(ctx)
 	url := s.baseURL + "/" + endpoint + "/"
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		message := "error while building request to get planets in swapi client"
-		log.Err(err).Msg(message)
+		logger.Err(err).Msg(message)
 		return nil, errors.Wrap(err, message)
 	}
 
@@ -59,14 +61,15 @@ func (s *SWAPIGateway) setQueryParams(req *http.Request, filter Filter) {
 	req.URL.RawQuery = query.Encode()
 }
 
-func (s *SWAPIGateway) performRequest(req *http.Request, filter Filter) (*http.Response, error) {
+func (s *SWAPIGateway) performRequest(ctx context.Context, req *http.Request, filter Filter) (*http.Response, error) {
+	logger := log.Ctx(ctx)
 	resp, err := s.client.Do(req)
 	if err != nil {
 		message := "error while performing request to swapi client"
-		log.Err(err).Msg(message)
+		logger.Err(err).Msg(message)
 		return nil, errors.Wrap(err, message)
 	}
 
-	log.Info().Msgf("Planets retrieved with success. name: %s. page: %s", filter.name, filter.page)
+	logger.Info().Msgf("Planets retrieved with success. name: %s. page: %s", filter.name, filter.page)
 	return resp, nil
 }

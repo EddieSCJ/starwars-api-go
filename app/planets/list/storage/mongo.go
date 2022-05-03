@@ -22,7 +22,8 @@ func NewMongoStore(client *mongo.Client) *MongoStore {
 }
 
 func (r *MongoStore) Count(ctx context.Context) (int64, error) {
-	log.Info().Msgf("Starting count documents in database.")
+	logger := log.Ctx(ctx)
+	logger.Info().Msgf("Starting count documents in database.")
 
 	result, err := r.collection.CountDocuments(ctx, bson.M{})
 	if err != nil {
@@ -31,16 +32,18 @@ func (r *MongoStore) Count(ctx context.Context) (int64, error) {
 		return 0, errors.Wrap(err, message)
 	}
 
-	log.Info().Msgf("%d documents returned successfully", result)
+	logger.Info().Msgf("%d documents returned successfully", result)
 	return result, nil
 }
 
 func (r *MongoStore) FindAll(ctx context.Context, mongoOptions MongoOptions) ([]model.PlanetStorageModel, error) {
+	logger := log.Ctx(ctx)
+
 	findOptions := mongoOptions.Build()
 	cursor, err := r.collection.Find(ctx, bson.M{}, findOptions)
 	if err != nil {
 		message := "error setting up cursor of planets in database"
-		log.Err(err).Msg(message)
+		logger.Err(err).Msg(message)
 		return nil, errors.Wrap(err, message)
 	}
 
@@ -49,10 +52,12 @@ func (r *MongoStore) FindAll(ctx context.Context, mongoOptions MongoOptions) ([]
 }
 
 func bindAll(ctx context.Context, size int64, cursor *mongo.Cursor) ([]model.PlanetStorageModel, error) {
+	logger := log.Ctx(ctx)
+
 	planets := make([]model.PlanetStorageModel, size)
 	if err := cursor.All(ctx, &planets); err != nil {
 		message := "error while binding cursor data to planet mongo type"
-		log.Err(err).Msg(message)
+		logger.Err(err).Msg(message)
 		return nil, errors.Wrap(err, message)
 	}
 
