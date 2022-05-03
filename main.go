@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/labstack/echo/v4"
 	"starwars-api-go/app/commons"
 	"starwars-api-go/app/planets"
 	"starwars-api-go/conf/storage/mongo"
+
+	"github.com/labstack/echo/v4"
 )
 
 func main() {
