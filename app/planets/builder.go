@@ -1,9 +1,10 @@
 package planets
 
 import (
+	"starwars-api-go/app/planets/list"
+
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/mongo"
-	"starwars-api-go/app/planets/list"
 )
 
 func APIRouter(e *echo.Echo, client *mongo.Client) {
