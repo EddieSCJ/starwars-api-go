@@ -10,16 +10,6 @@ type HttpError struct {
 	AdditionalInfo []string `json:"additionalInfo"`
 }
 
-func NewBadGatewayError(client, message string) *HttpError {
-	return &HttpError{
-		Code:    http.StatusBadGateway,
-		Message: client + ": error while requesting data",
-		AdditionalInfo: []string{
-			message,
-		},
-	}
-}
-
 func NewBadRequest(message string) *HttpError {
 	return &HttpError{
 		Code:    http.StatusBadRequest,
@@ -30,32 +20,9 @@ func NewBadRequest(message string) *HttpError {
 	}
 }
 
-func NewServiceUnavailableError(message string) *HttpError {
-	return &HttpError{
-		Code:    http.StatusServiceUnavailable,
-		Message: "unavailable service",
-		AdditionalInfo: []string{
-			message,
-		},
-	}
-}
-
-func NewNotFoundError(message string) *HttpError {
-	return &HttpError{
-		Code:    http.StatusNotFound,
-		Message: "resource not found",
-		AdditionalInfo: []string{
-			message,
-		},
-	}
-}
-
-func NewInternalServerError(message string) *HttpError {
+func NewInternalServerError() *HttpError {
 	return &HttpError{
 		Code:    http.StatusInternalServerError,
 		Message: "an unknown error occurred",
-		AdditionalInfo: []string{
-			message,
-		},
 	}
 }

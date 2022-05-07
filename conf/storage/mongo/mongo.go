@@ -16,19 +16,19 @@ const timeout = 10 * time.Second
 func StartDB() (*mongo.Client, context.CancelFunc) {
 	log.Info().Msg("Connecting to MongoDB")
 
-	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	ctx, cancel := context.WithTimeout(context.TODO(), timeout)
 	mongoURI := buildMongoURI()
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(mongoURI))
 	if err != nil {
 		defer cancel()
-		log.Err(err).Msgf("Error creating options to connect to MongoDB: %s", err.Error())
+		log.Err(err).Msg("Error creating options to connect to MongoDB")
 		return nil, cancel
 	}
 
 	pingErr := client.Ping(ctx, nil)
 	if pingErr != nil {
 		defer cancel()
-		log.Err(err).Msgf("Error connecting to MongoDB: %s", pingErr.Error())
+		log.Err(pingErr).Msgf("Error connecting to MongoDB")
 		return nil, cancel
 	}
 

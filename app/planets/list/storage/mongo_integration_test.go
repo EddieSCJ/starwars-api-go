@@ -5,6 +5,7 @@ package storage
 import (
 	"context"
 	"github.com/stretchr/testify/assert"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"starwars-api-go/conf/storage/mongo"
 	"strconv"
 	"testing"
@@ -15,7 +16,7 @@ var (
 )
 
 func insertData(mongoStore *MongoStore) {
-	_, err := mongoStore.collection.InsertOne(context.Background(), map[string]interface{}{
+	_, err := mongoStore.collection.InsertOne(context.TODO(), map[string]interface{}{
 		"name": "Alderaan",
 	})
 	if err != nil {
@@ -24,7 +25,7 @@ func insertData(mongoStore *MongoStore) {
 }
 
 func cleanData(store *MongoStore) {
-	_, err := store.collection.DeleteMany(context.Background(), map[string]interface{}{})
+	_, err := store.collection.DeleteMany(context.TODO(), options.Delete())
 	if err != nil {
 		panic(err)
 	}
@@ -38,12 +39,12 @@ func TestNewMongoStore(t *testing.T) {
 
 func TestCount(t *testing.T) {
 	mongoStore := NewMongoStore(client)
+	cleanData(mongoStore)
 	insertData(mongoStore)
 
 	count, err := mongoStore.Count(context.TODO())
 	assert.Nil(t, err)
 	assert.Equal(t, int64(1), count)
-
 	cleanData(mongoStore)
 }
 
@@ -57,7 +58,7 @@ func TestFindAll(t *testing.T) {
 		{"Get All Empty", 0, func(mongoStore *MongoStore) {}, func(mongoStore *MongoStore) {}},
 		{"Get All", 10, func(mongoStore *MongoStore) {
 			for i := 0; i < 10; i++ {
-				_, err := mongoStore.collection.InsertOne(context.Background(), map[string]interface{}{
+				_, err := mongoStore.collection.InsertOne(context.TODO(), map[string]interface{}{
 					"name": "Alderaan" + strconv.Itoa(i),
 				})
 				if err != nil {
@@ -70,6 +71,7 @@ func TestFindAll(t *testing.T) {
 	for _, test := range testTable {
 		t.Run(test.name, func(t *testing.T) {
 			mongoStore := NewMongoStore(client)
+			test.cleanDataFunc(mongoStore)
 			test.insertDataFunc(mongoStore)
 
 			planets, err := mongoStore.FindAll(context.TODO(), MongoOptions{offset: 0, limit: 10})

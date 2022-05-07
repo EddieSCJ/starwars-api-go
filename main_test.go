@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/ory/dockertest"
+	"github.com/ory/dockertest/v3"
 	"github.com/rs/zerolog/log"
 
 	"starwars-api-go/conf/storage/mongo"
@@ -27,9 +27,9 @@ func TestMain(m *testing.M) {
 	StartDocker()
 
 	mongo.RemoveDBContainer(pool)
-	_, err := mongo.StartDBContainer(pool)
-	if err != nil {
-		log.Error().Msgf("Could not start MongoDB: %s", err)
+	_, dbErr := mongo.StartDBContainer(pool)
+	if dbErr != nil {
+		log.Err(dbErr).Msg("Could not start MongoDB")
 		os.Exit(1)
 	}
 

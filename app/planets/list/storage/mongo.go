@@ -2,6 +2,7 @@ package storage
 
 import (
 	"context"
+	"starwars-api-go/app/commons"
 	"starwars-api-go/app/planets/model"
 
 	"github.com/pkg/errors"
@@ -17,7 +18,7 @@ type MongoStore struct {
 
 func NewMongoStore(client *mongo.Client) *MongoStore {
 	return &MongoStore{
-		collection: client.Database("starwars").Collection("planets"),
+		collection: client.Database(commons.GetMongoDBName()).Collection("planets"),
 	}
 }
 
@@ -54,7 +55,7 @@ func (r *MongoStore) FindAll(ctx context.Context, mongoOptions MongoOptions) ([]
 func bindAll(ctx context.Context, size int64, cursor *mongo.Cursor) ([]model.PlanetStorageModel, error) {
 	logger := log.Ctx(ctx)
 
-	planets := make([]model.PlanetStorageModel, size)
+	planets := make([]model.PlanetStorageModel, 0, size)
 	if err := cursor.All(ctx, &planets); err != nil {
 		message := "error while binding cursor data to planet mongo type"
 		logger.Err(err).Msg(message)

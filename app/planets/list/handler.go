@@ -31,14 +31,14 @@ func (h *Handler) List(ctx echo.Context) error {
 	filter := model.Filter{}
 	if err := ctx.Bind(&filter); err != nil {
 		logger.Error().Err(err).Msg("Error binding filter")
-		badRequestError := commons.NewBadRequest("wrong params")
+		badRequestError := commons.NewBadRequest("failed while binding filter. review your query params")
 		return ctx.JSON(badRequestError.Code, badRequestError)
 	}
 
 	planets, err := h.service.List(ctx.Request().Context(), filter)
 	if err != nil {
 		logger.Error().Err(err).Msg("Error listing planets")
-		internalServerError := commons.NewInternalServerError(err.Error())
+		internalServerError := commons.NewInternalServerError()
 		return ctx.JSON(internalServerError.Code, internalServerError)
 	}
 
