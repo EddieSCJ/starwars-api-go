@@ -55,7 +55,7 @@ func TestFindAll(t *testing.T) {
 		insertDataFunc func(mongoStore *MongoStore)
 		cleanDataFunc  func(mongoStore *MongoStore)
 	}{
-		{"Get All Empty", 0, func(mongoStore *MongoStore) {}, func(mongoStore *MongoStore) {}},
+		{"Get All Empty", 0, func(mongoStore *MongoStore) { return }, func(mongoStore *MongoStore) { return }},
 		{"Get All", 10, func(mongoStore *MongoStore) {
 			for i := 0; i < 10; i++ {
 				_, err := mongoStore.collection.InsertOne(context.TODO(), map[string]interface{}{
