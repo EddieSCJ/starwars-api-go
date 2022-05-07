@@ -43,7 +43,7 @@ func TestAPIListEmpty(t *testing.T) {
 	defer cancel()
 
 	handler := BuildListHandler(client)
-	request := httptest.NewRequest(http.MethodGet, "/planets?offset=5", nil)
+	request := httptest.NewRequest(http.MethodGet, "/planets", nil)
 	recorder := httptest.NewRecorder()
 
 	ctx := echo.New().NewContext(request, recorder)

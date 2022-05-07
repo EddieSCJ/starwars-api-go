@@ -16,12 +16,16 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
+const (
+	defaultEndpoint = "/planets?offset=5&limit=10"
+)
+
 func TestListEmpty(t *testing.T) {
 	mockService := mocks.PlanetService{}
 	mockService.On("List", mock.Anything, mock.Anything).Return([]model.Planet{}, nil)
 
 	handler := NewHandler(&mockService)
-	request := httptest.NewRequest(http.MethodGet, "/planets?offset=5&limit=10", nil)
+	request := httptest.NewRequest(http.MethodGet, defaultEndpoint, nil)
 	recorder := httptest.NewRecorder()
 
 	ctx := echo.New().NewContext(request, recorder)
@@ -54,7 +58,7 @@ func TestListSuccessfully(t *testing.T) {
 	}, nil)
 
 	handler := NewHandler(&mockService)
-	request := httptest.NewRequest(http.MethodGet, "/planets?offset=5&limit=10", nil)
+	request := httptest.NewRequest(http.MethodGet, defaultEndpoint, nil)
 	recorder := httptest.NewRecorder()
 
 	ctx := echo.New().NewContext(request, recorder)
@@ -76,7 +80,7 @@ func TestListFailBadRequest(t *testing.T) {
 	mockService.On("List", mock.Anything, mock.Anything).Return([]model.Planet{}, nil)
 
 	handler := NewHandler(&mockService)
-	request := httptest.NewRequest(http.MethodGet, "/planets?offset=5f&limit=10", nil)
+	request := httptest.NewRequest(http.MethodGet, defaultEndpoint+"f", nil)
 	recorder := httptest.NewRecorder()
 
 	ctx := echo.New().NewContext(request, recorder)
@@ -96,7 +100,7 @@ func TestListFailInternalServerError(t *testing.T) {
 	mockService.On("List", mock.Anything, mock.Anything).Return(nil, errors.New("error"))
 
 	handler := NewHandler(&mockService)
-	request := httptest.NewRequest(http.MethodGet, "/planets?offset=5&limit=10", nil)
+	request := httptest.NewRequest(http.MethodGet, defaultEndpoint, nil)
 	recorder := httptest.NewRecorder()
 
 	ctx := echo.New().NewContext(request, recorder)
