@@ -1,12 +1,10 @@
-package storage
+package model
 
-import "time"
-
-type PlanetMongo struct {
+type Planet struct {
 	ID               string
 	Name             string
 	Climate          []string
 	Terrain          []string
 	MovieAppearances int
-	CreationDate     time.Time
+	CacheInDays      int
 }

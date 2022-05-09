@@ -1,6 +1,6 @@
 //go:build integration
 
-package nosql
+package mongo
 
 import (
 	"testing"

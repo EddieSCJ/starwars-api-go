@@ -1,4 +1,4 @@
-package nosql
+package mongo
 
 import (
 	"context"
@@ -6,8 +6,8 @@ import (
 
 	"starwars-api-go/app/commons"
 
-	"github.com/ory/dockertest"
-	"github.com/ory/dockertest/docker"
+	"github.com/ory/dockertest/v3"
+	"github.com/ory/dockertest/v3/docker"
 	"github.com/rs/zerolog/log"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -20,13 +20,13 @@ const tcpPort = "27017/tcp"
 func StartDBContainer(pool *dockertest.Pool) (*dockertest.Resource, error) {
 	resource, err := pullMongoImage(pool)
 	if err != nil {
-		log.Error().Msgf("Could not start Mongo Image: %s", err)
+		log.Err(err).Msgf("Could not start Mongo Image: %s", err)
 		return nil, err
 	}
 
 	err = makeReadyToAcceptConnections(pool, resource)
 	if err != nil {
-		log.Error().Msgf("Could not connect to docker: %s", err)
+		log.Err(err).Msgf("Could not connect to docker: %s", err)
 		return nil, err
 	}
 	return resource, nil
@@ -70,12 +70,12 @@ func makeReadyToAcceptConnections(pool *dockertest.Pool, resource *dockertest.Re
 
 func RemoveDBContainer(pool *dockertest.Pool) {
 	if err := pool.RemoveContainerByName(commons.GetMongoContainerName()); err != nil {
-		log.Error().Msgf("Could not purge resource: %s", err)
+		log.Err(err).Msgf("Could not purge resource: %s", err)
 	}
 }
 
 func DisconnectDB() {
 	if err := dbClient.Disconnect(context.TODO()); err != nil {
-		log.Error().Msgf("Could not disconnect from DB: %s", err)
+		log.Err(err).Msgf("Could not disconnect from DB: %s", err)
 	}
 }
