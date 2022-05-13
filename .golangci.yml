@@ -52,7 +52,6 @@ linters:
   enable:
     - bodyclose
     - dogsled
-    - dupl
     - errcheck
     - godot
     - gochecknoinits
