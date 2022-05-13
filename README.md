@@ -27,6 +27,10 @@ Please, read the content below to know how to use this api and if is there any d
 * GolangCI-Lint
     * You are able to see it in the actions tab, most specifically in the Lint Check job.
 
+#### <p align="center"> Running </p>
+To run the program you just need to type: `go run main.go` in your terminal and wait to see magic happens.
+However, make sure you have a mongodb instance in docker os locally running to the program access.
+
 #### <p align="center">  Testing </p>
 
 There are two types of tests which are used in this project, unit and integrated tests.
