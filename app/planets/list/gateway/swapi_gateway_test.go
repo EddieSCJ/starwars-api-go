@@ -20,7 +20,7 @@ func TestNewSWAPIGateway(t *testing.T) {
 
 func TestMountRequest(t *testing.T) {
 	g := NewSWAPIGateway()
-	req, err := g.mountRequest(context.TODO(), "planets")
+	req, err := g.mountRequest(context.TODO())
 	if err != nil {
 		t.Error(err)
 	}
@@ -31,7 +31,7 @@ func TestMountRequest(t *testing.T) {
 func TestSetNameQueryParam(t *testing.T) {
 	t.Parallel()
 	g := NewSWAPIGateway()
-	req, err := g.mountRequest(context.TODO(), "planets")
+	req, err := g.mountRequest(context.TODO())
 	if err != nil {
 		t.Error(err)
 	}
@@ -43,7 +43,7 @@ func TestSetNameQueryParam(t *testing.T) {
 func TestSetPageParam(t *testing.T) {
 	t.Parallel()
 	g := NewSWAPIGateway()
-	req, err := g.mountRequest(context.TODO(), "planets")
+	req, err := g.mountRequest(context.TODO())
 	if err != nil {
 		t.Error(err)
 	}
@@ -55,7 +55,7 @@ func TestSetPageParam(t *testing.T) {
 func TestSetAllQueryParams(t *testing.T) {
 	t.Parallel()
 	g := NewSWAPIGateway()
-	req, err := g.mountRequest(context.TODO(), "planets")
+	req, err := g.mountRequest(context.TODO())
 	if err != nil {
 		t.Error(err)
 	}
@@ -79,6 +79,9 @@ func TestGetPlanets(t *testing.T) {
 	assert.Equal(t, response.Request.Method, http.MethodGet)
 	assert.Equal(t, response.Request.URL.String(), commons.GetSWAPIURL()+"/planets/?page=1")
 	assert.Equal(t, "1", response.Request.URL.Query().Get("page"))
+
+	err = response.Body.Close()
+	assert.NoError(t, err)
 }
 
 func TestGetPlanetsByName(t *testing.T) {
@@ -95,4 +98,7 @@ func TestGetPlanetsByName(t *testing.T) {
 	assert.Equal(t, response.Request.Method, http.MethodGet)
 	assert.Equal(t, response.Request.URL.String(), commons.GetSWAPIURL()+"/planets/?search=Tatooine")
 	assert.Equal(t, "Tatooine", response.Request.URL.Query().Get("search"))
+
+	err = response.Body.Close()
+	assert.NoError(t, err)
 }

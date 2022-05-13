@@ -71,7 +71,7 @@ func TestAPIListSuccessfully(t *testing.T) {
 	if assert.NoError(t, handler.List(ctx)) {
 		assert.Equal(t, http.StatusOK, recorder.Code)
 
-		planetsJson := make([]model.PlanetJson, 0, len(data))
+		planetsJson := make([]model.PlanetJSON, 0, len(data))
 		err := json.Unmarshal(recorder.Body.Bytes(), &planetsJson)
 
 		assert.NoError(t, err)

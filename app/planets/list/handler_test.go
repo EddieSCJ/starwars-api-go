@@ -64,7 +64,7 @@ func TestListSuccessfully(t *testing.T) {
 	ctx := echo.New().NewContext(request, recorder)
 
 	if assert.NoError(t, handler.List(ctx)) {
-		var planets []model.PlanetJson
+		var planets []model.PlanetJSON
 		assert.Equal(t, http.StatusOK, recorder.Code)
 
 		err := json.Unmarshal(recorder.Body.Bytes(), &planets)

@@ -1,6 +1,6 @@
 package model
 
-type PlanetJson struct {
+type PlanetJSON struct {
 	ID               string   `json:"id"`
 	Name             string   `json:"Name"`
 	Climate          []string `json:"climate"`
@@ -9,8 +9,8 @@ type PlanetJson struct {
 	CacheInDays      int      `json:"cache_in_days"`
 }
 
-func FromDomain(planet Planet) PlanetJson {
-	return PlanetJson{
+func FromDomain(planet Planet) PlanetJSON {
+	return PlanetJSON{
 		ID:               planet.ID,
 		Name:             planet.Name,
 		Climate:          planet.Climate,
@@ -20,10 +20,10 @@ func FromDomain(planet Planet) PlanetJson {
 	}
 }
 
-func FromDomainList(planets []Planet) []PlanetJson {
-	planetJsonList := make([]PlanetJson, 0, len(planets))
+func FromDomainList(planets []Planet) []PlanetJSON {
+	planetJSONList := make([]PlanetJSON, 0, len(planets))
 	for _, planet := range planets {
-		planetJsonList = append(planetJsonList, FromDomain(planet))
+		planetJSONList = append(planetJSONList, FromDomain(planet))
 	}
-	return planetJsonList
+	return planetJSONList
 }
