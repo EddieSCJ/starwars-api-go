@@ -29,7 +29,7 @@ Please, read the content below to know how to use this api and if is there any d
 
 #### <p align="center"> Running </p>
 To run the program you just need to type: `go run main.go` in your terminal and wait to see magic happens.
-However, make sure you have a mongodb instance in docker os locally running to the program access.
+However, make sure you have a mongodb instance in [Docker](https://docs.docker.com/engine/install/) or locally running to the program access.
 
 #### <p align="center">  Testing </p>
 
