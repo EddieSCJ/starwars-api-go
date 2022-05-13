@@ -16,7 +16,7 @@ type PlanetStorageModel struct {
 }
 
 func (m PlanetStorageModel) ToDomain() Planet {
-	difference := time.Now().Sub(m.CreationDate)
+	difference := time.Since(m.CreationDate)
 	cacheInDays := difference.Hours() / dayInHours
 
 	return Planet{

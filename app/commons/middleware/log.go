@@ -18,14 +18,14 @@ func AddMetadata() echo.MiddlewareFunc {
 			res := c.Response()
 
 			host, _, _ := net.SplitHostPort(req.RemoteAddr)
-			transactionId := getTransactionId(req, res)
-			c.Set("transactionId", transactionId)
+			transactionID := gettransactionID(req, res)
+			c.Set("transactionID", transactionID)
 
 			logger := zerolog.Ctx(req.Context())
 			logger.UpdateContext(func(c zerolog.Context) zerolog.Context {
 				return c.Str("uri", req.Method+" "+req.URL.String()).
 					Str("host_ip", host).
-					Str("transaction_id", transactionId).
+					Str("transaction_id", transactionID).
 					Str("user_agent", req.UserAgent()).
 					Str("referer", req.Referer()).
 					Str("remote_addr", req.RemoteAddr)
@@ -50,23 +50,23 @@ func SetLoggerInContext(logger zerolog.Logger) echo.MiddlewareFunc {
 	}
 }
 
-func getTransactionId(req *http.Request, res *echo.Response) string {
-	transactionId := TransactionIdOfCtx(req.Context())
-	if transactionId == "" {
-		transactionId = res.Header().Get("X-Transaction-Id")
-		if transactionId == "" {
-			transactionId = generateTID()
+func gettransactionID(req *http.Request, res *echo.Response) string {
+	transactionID := transactionIDOfCtx(req.Context())
+	if transactionID == "" {
+		transactionID = res.Header().Get("X-Transaction-Id")
+		if transactionID == "" {
+			transactionID = generateTID()
 		}
 	}
-	return transactionId
+	return transactionID
 }
 
-func TransactionIdOfCtx(ctx context.Context) string {
-	transactionId, ok := ctx.Value("tid").(string)
+func transactionIDOfCtx(ctx context.Context) string {
+	transactionID, ok := ctx.Value("tid").(string)
 	if !ok {
-		transactionId = ""
+		transactionID = ""
 	}
-	return transactionId
+	return transactionID
 }
 
 func generateTID() string {

@@ -87,7 +87,7 @@ func TestListFailBadRequest(t *testing.T) {
 
 	if assert.NoError(t, handler.List(ctx)) {
 		assert.Equal(t, http.StatusBadRequest, recorder.Code)
-		var httpError commons.HttpError
+		var httpError commons.HTTPError
 		err := json.Unmarshal(recorder.Body.Bytes(), &httpError)
 
 		assert.NoError(t, err)
@@ -108,7 +108,7 @@ func TestListFailInternalServerError(t *testing.T) {
 	if assert.NoError(t, handler.List(ctx)) {
 		assert.Equal(t, http.StatusInternalServerError, recorder.Code)
 
-		var httpError commons.HttpError
+		var httpError commons.HTTPError
 		err := json.Unmarshal(recorder.Body.Bytes(), &httpError)
 		assert.NoError(t, err)
 		assert.Equal(t, "an unknown error occurred", httpError.Message)
