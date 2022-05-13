@@ -10,14 +10,7 @@ type PlanetJSON struct {
 }
 
 func FromDomain(planet Planet) PlanetJSON {
-	return PlanetJSON{
-		ID:               planet.ID,
-		Name:             planet.Name,
-		Climate:          planet.Climate,
-		Terrain:          planet.Terrain,
-		MovieAppearances: planet.MovieAppearances,
-		CacheInDays:      planet.CacheInDays,
-	}
+	return PlanetJSON(planet)
 }
 
 func FromDomainList(planets []Planet) []PlanetJSON {
