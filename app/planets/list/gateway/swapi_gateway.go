@@ -28,7 +28,7 @@ func (s SWAPIGateway) GetPlanets(ctx context.Context, filter Filter) (*http.Resp
 	logger := log.Ctx(ctx)
 	logger.Info().Msgf("Starting getting planets from Star Wars API client. name: %s. page: %s", filter.name, filter.page)
 
-	req, err := s.mountRequest(ctx, "planets")
+	req, err := s.mountRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -37,9 +37,9 @@ func (s SWAPIGateway) GetPlanets(ctx context.Context, filter Filter) (*http.Resp
 	return s.performRequest(ctx, req, filter)
 }
 
-func (s *SWAPIGateway) mountRequest(ctx context.Context, endpoint string) (*http.Request, error) {
+func (s *SWAPIGateway) mountRequest(ctx context.Context) (*http.Request, error) {
 	logger := log.Ctx(ctx)
-	url := s.baseURL + "/" + endpoint + "/"
+	url := s.baseURL + "/planets/"
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		message := "error while building request to get planets in swapi client"

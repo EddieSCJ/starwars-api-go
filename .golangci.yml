@@ -52,7 +52,6 @@ linters:
   enable:
     - bodyclose
     - dogsled
-    - dupl
     - errcheck
     - godot
     - gochecknoinits
@@ -69,7 +68,6 @@ linters:
     - misspell
     - nakedret
     - rowserrcheck
-    - staticcheck
     - structcheck
     - stylecheck
     - typecheck

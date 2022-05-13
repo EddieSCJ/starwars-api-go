@@ -2,6 +2,7 @@ package main
 
 import (
 	"starwars-api-go/app/commons"
+	"starwars-api-go/app/commons/middleware"
 	"starwars-api-go/app/planets"
 	"starwars-api-go/conf/storage/mongo"
 
@@ -11,6 +12,11 @@ import (
 func main() {
 	client, _ := mongo.StartDB()
 	e := echo.New()
+
+	e.Use(
+		middleware.SetLoggerInContext(commons.NewZeroLogger()),
+		middleware.AddMetadata(),
+	)
 
 	planets.APIRouter(e, client)
 

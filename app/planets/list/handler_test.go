@@ -64,7 +64,7 @@ func TestListSuccessfully(t *testing.T) {
 	ctx := echo.New().NewContext(request, recorder)
 
 	if assert.NoError(t, handler.List(ctx)) {
-		var planets []model.PlanetJson
+		var planets []model.PlanetJSON
 		assert.Equal(t, http.StatusOK, recorder.Code)
 
 		err := json.Unmarshal(recorder.Body.Bytes(), &planets)
@@ -87,7 +87,7 @@ func TestListFailBadRequest(t *testing.T) {
 
 	if assert.NoError(t, handler.List(ctx)) {
 		assert.Equal(t, http.StatusBadRequest, recorder.Code)
-		var httpError commons.HttpError
+		var httpError commons.HTTPError
 		err := json.Unmarshal(recorder.Body.Bytes(), &httpError)
 
 		assert.NoError(t, err)
@@ -108,7 +108,7 @@ func TestListFailInternalServerError(t *testing.T) {
 	if assert.NoError(t, handler.List(ctx)) {
 		assert.Equal(t, http.StatusInternalServerError, recorder.Code)
 
-		var httpError commons.HttpError
+		var httpError commons.HTTPError
 		err := json.Unmarshal(recorder.Body.Bytes(), &httpError)
 		assert.NoError(t, err)
 		assert.Equal(t, "an unknown error occurred", httpError.Message)

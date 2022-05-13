@@ -42,6 +42,10 @@ func GetSWAPIURL() string {
 	return GetEnv("SWAPI_URL", "https://swapi.dev/api")
 }
 
+func GetEnvironment() string {
+	return GetEnv("ENV", "dev")
+}
+
 func GetDefaultAPIPort() string {
 	return GetEnv("API_PORT", "8080")
 }
