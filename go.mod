@@ -3,8 +3,7 @@ module starwars-api-go
 go 1.18
 
 require (
-	github.com/labstack/echo/v4 v4.7.2
-	github.com/ory/dockertest v3.3.5+incompatible
+	github.com/labstack/echo/v4 v4.9.0
 	github.com/ory/dockertest/v3 v3.8.1
 	github.com/pkg/errors v0.9.1
 	github.com/rs/zerolog v1.26.1
